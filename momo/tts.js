@@ -76,7 +76,7 @@ TTS.setOnUtteranceProgressListener(ttsOnUtteranceProgressListener);
         
   * 异步执行，返回不代表执行完成，立即使用文件可能会出现异常（文件不完整）
 */
-function ttsSpeech(ttsText,fileName){
+function ttsSpeech(ttsText,fileName, isFlush){
     var status=false;
     var msg="";
     try{
@@ -95,7 +95,7 @@ function ttsSpeech(ttsText,fileName){
                         msg="文件已存在";
                     }
                 }else{
-                TTS.speak(ttsText,TextToSpeech.QUEUE_ADD/*QUEUE_FLUSH插队，QUEUE_ADD排队*/,null);
+                TTS.speak(ttsText, isFlush ? TextToSpeech.QUEUE_FLUSH: TextToSpeech.QUEUE_ADD/*QUEUE_FLUSH插队，QUEUE_ADD排队*/,null);
                     status=true;
                     msg="已开始朗读";
                 }

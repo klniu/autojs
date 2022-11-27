@@ -24,6 +24,7 @@ events.on("key", (code, event) => {
             let memorizeButton = text("认识").findOnce();
             if (memorizeButton) {
                 memorizeButton.click();
+                tts.ttsSpeech("", null, true);
             } else {
                 click(500, 500);
                 sleep(1000);
@@ -36,12 +37,14 @@ events.on("key", (code, event) => {
             let almostButton = text("模糊").findOnce();
             if (almostButton) {
                 almostButton.click();
+                tts.ttsSpeech("", null, true);
             }
             break;
         case Y_KEY:
             let forgetButton = text("忘记").findOnce();
             if (forgetButton) {
                 forgetButton.click();
+                tts.ttsSpeech("", null, true);
             }
             break;
         case X_KEY:
@@ -73,7 +76,7 @@ function readWord() {
     if (word) {
         var wordText = word.text();
         if (wordText.trim().length > 0) {
-            tts.ttsSpeech(wordText.split('').join(' '));
+            tts.ttsSpeech(wordText.split('').join(' '), null, true);
         }
     }
 }
