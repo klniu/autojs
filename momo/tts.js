@@ -95,7 +95,7 @@ function ttsSpeech(ttsText,fileName){
                         msg="文件已存在";
                     }
                 }else{
-                TTS.speak(ttsText,TextToSpeech.QUEUE_FLUSH/*QUEUE_FLUSH插队，QUEUE_ADD排队*/,null);
+                TTS.speak(ttsText,TextToSpeech.QUEUE_ADD/*QUEUE_FLUSH插队，QUEUE_ADD排队*/,null);
                     status=true;
                     msg="已开始朗读";
                 }

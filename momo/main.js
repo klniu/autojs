@@ -3,7 +3,7 @@ importClass(java.util.Locale);
 
 auto();
 
-var tts = require("tts.js")
+var tts = require("./tts.js")
 
 events.observeKey();
 
@@ -27,6 +27,8 @@ events.on("key", (code, event) => {
             } else {
                 click(500, 500);
                 sleep(1000);
+                readWord();
+                sleep(2000);
                 readMeaning();
             }
             break;
@@ -61,8 +63,17 @@ function readMeaning() {
     if (meaning) {
         var meaningText = meaning.text();
         if (meaningText.trim().length > 0) {
-            console.log(meaningText);
             tts.ttsSpeech(meaningText);
+        }
+    }
+}
+
+function readWord() {
+    let word = id("rev_tx_title").findOnce();
+    if (word) {
+        var wordText = word.text();
+        if (wordText.trim().length > 0) {
+            tts.ttsSpeech(wordText.split('').join(' '));
         }
     }
 }
