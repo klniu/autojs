@@ -38,6 +38,8 @@ events.on("key", (code, event) => {
             if (almostButton) {
                 almostButton.click();
                 tts.ttsSpeech("", null, true);
+            } else {
+                readWord();
             }
             break;
         case Y_KEY:
@@ -76,7 +78,7 @@ function readWord() {
     if (word) {
         var wordText = word.text();
         if (wordText.trim().length > 0) {
-            tts.ttsSpeech(wordText.split('').join(' '), null, true);
+            tts.ttsSpeech(wordText.split('').join('-'), null, true);
         }
     }
 }
