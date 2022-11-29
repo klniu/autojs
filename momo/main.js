@@ -27,9 +27,9 @@ events.on("key", (code, event) => {
                 tts.ttsSpeech("", null, true);
             } else {
                 click(500, 500);
-                sleep(1000);
+                sleep(500);
                 readWord();
-                sleep(2000);
+                sleep(1000);
                 readMeaning();
             }
             break;
