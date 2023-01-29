@@ -7,11 +7,12 @@ var tts = require("./tts.js")
 
 events.observeKey();
 
-const A_KEY = "KEYCODE_BUTTON_A";
-const B_KEY = "KEYCODE_BUTTON_B";
+// 新的MOCUTE 052
+const A_KEY = "KEYCODE_BUTTON_START";
+const B_KEY = "KEYCODE_BUTTON_R1";
 const Y_KEY = "KEYCODE_BUTTON_Y";
 const X_KEY = "KEYCODE_BUTTON_X";
-const START_KEY = "KEYCODE_BUTTON_START";
+const START_KEY = "KEYCODE_BUTTON_B";
 
 events.on("key", (code, event) => {
     let keyCode = event.keyCodeToString(code);
