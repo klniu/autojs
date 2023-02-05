@@ -3,86 +3,69 @@ importClass(java.util.Locale);
 
 auto();
 
-var tts = require("./tts.js")
+var momo = require("./momo.js");
+
+var A_KEY = "KEYCODE_1";
+var B_KEY = "KEYCODE_2";
+var X_KEY = "KEYCODE_3";
+var Y_KEY = "KEYCODE_4";
+var START_KEY = "KEYCODE_0";
+
+var options = ["MOCUTE_052老", "MOCUTE_052新"]
+var i = dialogs.select("请选择一个遥控器", options);
+switch (i) {
+    case 0:
+        A_KEY = "KEYCODE_1";
+        B_KEY = "KEYCODE_2";
+        X_KEY = "KEYCODE_3";
+        Y_KEY = "KEYCODE_4";
+        START_KEY = "KEYCODE_0";
+        break;
+    case 1:
+        A_KEY = "KEYCODE_BUTTON_START";
+        B_KEY = "KEYCODE_BUTTON_R1";
+        X_KEY = "KEYCODE_BUTTON_X";
+        Y_KEY = "KEYCODE_BUTTON_Y";
+        START_KEY = "KEYCODE_BUTTON_B";
+        break;
+    default:
+        alert("Wrong Remote Control", "Wrong remote control, quit!");
+        break;
+    
+}
+
 
 events.observeKey();
 
-const A_KEY = "KEYCODE_BUTTON_A";
-const B_KEY = "KEYCODE_BUTTON_B";
-const Y_KEY = "KEYCODE_BUTTON_Y";
-const X_KEY = "KEYCODE_BUTTON_X";
-const START_KEY = "KEYCODE_BUTTON_START";
+// 如果正在处理
+var isHandling = false;
 
 events.on("key", (code, event) => {
     let keyCode = event.keyCodeToString(code);
-    if (event.getAction() !== event.ACTION_DOWN) {
-        return
+    if (isHandling || event.getAction() !== event.ACTION_DOWN) {
+        return;
     } 
-    log("keyCode: " + keyCode);
+    isHandling = true;
+    log("keyCode: " + keyCode + ", action: " + event.getAction());
     switch (keyCode) {
         case A_KEY:
-            let memorizeButton = text("认识").findOnce();
-            if (memorizeButton) {
-                memorizeButton.click();
-                tts.ttsSpeech("", null, true);
-            } else {
-                click(500, 500);
-                sleep(300);
-                readWord();
-            }
+            momo.clickMemoryButton();
             break;
         case B_KEY:
-            let almostButton = text("模糊").findOnce();
-            if (!almostButton) {
-                almostButton = text("不确定").findOnce();
-            }
-            if (almostButton) {
-                almostButton.click();
-                tts.ttsSpeech("", null, true);
-            } else {
-                readWord();
-            }
+            momo.clickForgetButton();
             break;
         case Y_KEY:
-            let forgetButton = text("忘记").findOnce();
-            if (!forgetButton) {
-                forgetButton = text("不认识").findOnce();
-            }
-            if (forgetButton) {
-                forgetButton.click();
-                tts.ttsSpeech("", null, true);
-            }
+            momo.clickUnclearButton();
             break;
         case X_KEY:
-            let pronouceButton = desc("音标小喇叭").findOnce();
-            if (pronouceButton) {
-                pronouceButton.click();
-            }
+            momo.clickPronounce();
             break;
         case START_KEY: 
-            readMeaning();
+            momo.readMeaning();
             break;
         default:
             break;
     }
+    sleep(100);
+    isHandling = false;
 });
-
-function readMeaning() {
-    let meaning = id("rev_tx_interpretation").findOnce();
-    if (meaning) {
-        var meaningText = meaning.text();
-        if (meaningText.trim().length > 0) {
-            tts.ttsSpeech(meaningText);
-        }
-    }
-}
-
-function readWord() {
-    let word = id("rev_tx_title").findOnce();
-    if (word) {
-        var wordText = word.text();
-        if (wordText.trim().length > 0) {
-            tts.ttsSpeech(wordText.split('').join('-'), null, true);
-        }
-    }
-}
