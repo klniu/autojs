@@ -38,15 +38,16 @@ switch (i) {
 events.observeKey();
 
 // 如果正在处理
-var isHandling = false;
+var lastHandleTime = new Date();
 
 events.on("key", (code, event) => {
     let keyCode = event.keyCodeToString(code);
-    if (isHandling || event.getAction() !== event.ACTION_DOWN) {
+    let timeDiff = new Date().getTime() - lastHandleTime;
+    if (timeDiff < 1000 || event.getAction() !== event.ACTION_DOWN) {
         return;
     } 
-    isHandling = true;
     log("keyCode: " + keyCode + ", action: " + event.getAction());
+    lastHandleTime = new Date();
     switch (keyCode) {
         case A_KEY:
             momo.clickMemoryButton();
@@ -66,6 +67,5 @@ events.on("key", (code, event) => {
         default:
             break;
     }
-    sleep(100);
     isHandling = false;
 });
