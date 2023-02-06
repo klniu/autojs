@@ -53,10 +53,10 @@ events.on("key", (code, event) => {
             momo.clickMemoryButton();
             break;
         case B_KEY:
-            momo.clickForgetButton();
+            momo.clickUnclearButton();
             break;
         case Y_KEY:
-            momo.clickUnclearButton();
+            momo.clickMemoryButton();
             break;
         case X_KEY:
             momo.clickPronounce();
